@@ -88,6 +88,27 @@ const App: React.FC = () => {
               conn.send( mouseMoveDTO );
             }
 
+            window.onkeydown = (ev: any) => {
+              console.log(ev);
+              if (ev instanceof KeyboardEvent) {
+                const keyDownDTO: DTO = {
+                  type: 'keydown',
+                  key: ev.key,
+                }
+                conn.send( keyDownDTO );
+              }
+            }
+
+            window.onkeyup = (ev: any) => {
+              if (ev instanceof KeyboardEvent) {
+                const keyUpDTO: DTO = {
+                  type: 'keyup',
+                  key: ev.key,
+                }
+                conn.send( keyUpDTO );
+              }
+            }
+
             return;
           }
           console.error('videoRef.current is null');

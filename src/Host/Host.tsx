@@ -4,6 +4,7 @@ import { DTO } from '../DTO';
 
 const robot = window.require('robotjs');
 robot.setMouseDelay(2);
+robot.setKeyboardDelay(2);
 const { desktopCapturer, ipcRenderer } = window.require('electron');
 
 
@@ -87,6 +88,16 @@ const Host: React.FC = () => {
             case 'mousemove': {
               const mouseMoveDTO: DTO = { type: 'mousemove', x: data.x, y: data.y };
               move(mouseMoveDTO.x, mouseMoveDTO.y);
+              return;
+            }
+            case 'keydown': {
+              const keyDownDTO: DTO = { type: 'keydown', code: data.code };
+              robot.keyToggle(keyDownDTO.code, 'down');
+              return;
+            }
+            case 'keyup': {
+              const keyUpDTO: DTO = { type: 'keyup', code: data.code };
+              robot.keyToggle(keyUpDTO.code, 'up');
               return;
             }
           }

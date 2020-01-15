@@ -22,4 +22,19 @@ interface MouseMoveDTO {
   y: number;
 }
 
-export type DTO = ClientResizeDTO | MouseDownDTO | MouseUpDTO | MouseMoveDTO;
+interface KeyDownDTO {
+  type: 'keydown';
+  key: string;
+}
+
+interface KeyUpDTO {
+  type: 'keyup';
+  key: string;
+}
+
+export type DTO = ClientResizeDTO
+  | MouseDownDTO
+  | MouseUpDTO
+  | MouseMoveDTO
+  | KeyDownDTO
+  | KeyUpDTO;
