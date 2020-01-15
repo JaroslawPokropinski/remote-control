@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Peer from "../Peerjs/Peerjs";
-// import robot from 'robotjs';
 import { DTO } from '../DTO';
 
 const robot = window.require('robotjs');
-
 const { desktopCapturer, ipcRenderer } = window.require('electron');
 
-async function getScreens() {
-  const sources = await desktopCapturer.getSources({ types: ['screen'] });
-  return sources.map((s) => s.name);
-}
 
 async function getWindowStream(window: Electron.DesktopCapturerSource) {
   const constrains = {
@@ -42,16 +36,6 @@ async function getScreenStreams() {
   return streams;
 }
 
-// async function handleData(peer: Peer, conn: DataConnection, data: any) {
-//   const stream = await getMatchingWindow(data)
-//     .then(getWindowStream);
-//   peer.call(conn.peer, stream);
-// }
-
-function handleError(e: any) {
-  console.log(e);
-}
-
 const Host: React.FC = () => {
   useEffect(() => {
     const peer = new Peer();
@@ -77,7 +61,13 @@ const Host: React.FC = () => {
           switch(data.type) {
             case 'mousedown': {
               const mouseDownDTO: DTO = { type: 'mousedown', x: data.x, y: data.y };
-              robot.moveMouse(mouseDownDTO.x, mouseDownDTO.y);
+              if (screens === null) {
+                return;
+              }
+              const width = screens[0].getVideoTracks()[0].getSettings().width ?? 1;
+              const height = screens[0].getVideoTracks()[0].getSettings().height ?? 1;
+
+              robot.moveMouse(mouseDownDTO.x * width, mouseDownDTO.y * height);
             }
           }
         }
