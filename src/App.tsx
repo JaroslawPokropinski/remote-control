@@ -61,6 +61,33 @@ const App: React.FC = () => {
               }
               conn.send( mouseDownDTO );
             };
+
+            v.onmouseup = (ev) => {
+              if (ev.type !== 'mouseup') {
+                throw new Error('Mouseup doesn\' have mouseup type');
+              }
+
+              const mouseUpDTO: DTO = {
+                type: ev.type,
+                x: ev.x / v.clientWidth,
+                y: ev.y / v.clientHeight,
+              }
+              conn.send( mouseUpDTO );
+            }
+
+            v.onmousemove = (ev) => {
+              if (ev.type !== 'mousemove') {
+                throw new Error('Mousemove doesn\' have mousemove type');
+              }
+
+              const mouseMoveDTO: DTO = {
+                type: ev.type,
+                x: ev.x / v.clientWidth,
+                y: ev.y / v.clientHeight,
+              }
+              conn.send( mouseMoveDTO );
+            }
+
             return;
           }
           console.error('videoRef.current is null');

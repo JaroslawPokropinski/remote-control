@@ -16,4 +16,10 @@ interface MouseUpDTO {
   y: number;
 }
 
-export type DTO = ClientResizeDTO | MouseDownDTO | MouseUpDTO;
+interface MouseMoveDTO {
+  type: 'mousemove';
+  x: number;
+  y: number;
+}
+
+export type DTO = ClientResizeDTO | MouseDownDTO | MouseUpDTO | MouseMoveDTO;
