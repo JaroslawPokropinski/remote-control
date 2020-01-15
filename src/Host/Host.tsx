@@ -58,8 +58,6 @@ const Host: React.FC = () => {
         });
     
       conn.on('data', function (data) {
-        console.log(data);
-
         const move = (x: number, y: number) => {
           if (screens === null) {
             return;

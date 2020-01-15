@@ -89,7 +89,6 @@ const App: React.FC = () => {
             }
 
             window.onkeydown = (ev: any) => {
-              console.log(ev);
               if (ev instanceof KeyboardEvent) {
                 const keyDownDTO: DTO = {
                   type: 'keydown',
