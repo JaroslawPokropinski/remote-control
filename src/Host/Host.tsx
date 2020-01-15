@@ -3,6 +3,7 @@ import Peer from "../Peerjs/Peerjs";
 import { DTO } from '../DTO';
 
 const robot = window.require('robotjs');
+robot.setMouseDelay(2);
 const { desktopCapturer, ipcRenderer } = window.require('electron');
 
 
