@@ -56,22 +56,41 @@ const Host: React.FC = () => {
         });
     
       conn.on('data', function (data) {
+        console.log(data);
+
+        const move = (x: number, y: number) => {
+          if (screens === null) {
+            return;
+          }
+
+          const width = screens[0].getVideoTracks()[0].getSettings().width ?? 1;
+          const height = screens[0].getVideoTracks()[0].getSettings().height ?? 1;
+
+          robot.moveMouse(x * width, y * height);
+        }
+
         if (data.type) {
-          
           switch(data.type) {
             case 'mousedown': {
               const mouseDownDTO: DTO = { type: 'mousedown', x: data.x, y: data.y };
-              if (screens === null) {
-                return;
-              }
-              const width = screens[0].getVideoTracks()[0].getSettings().width ?? 1;
-              const height = screens[0].getVideoTracks()[0].getSettings().height ?? 1;
-
-              robot.moveMouse(mouseDownDTO.x * width, mouseDownDTO.y * height);
+              move(mouseDownDTO.x, mouseDownDTO.y);
+              robot.mouseToggle("down", "left");
+              return;
+            }
+            case 'mouseup': {
+              const mouseDownDTO: DTO = { type: 'mouseup', x: data.x, y: data.y };
+              move(mouseDownDTO.x, mouseDownDTO.y);
+              robot.mouseToggle("up", "left");
+              return;
+            }
+            case 'mousemove': {
+              const mouseMoveDTO: DTO = { type: 'mousemove', x: data.x, y: data.y };
+              move(mouseMoveDTO.x, mouseMoveDTO.y);
+              return;
             }
           }
         }
-        console.log(data);
+        
       });
     
       conn.on('close', () => {
