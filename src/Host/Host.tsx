@@ -91,13 +91,13 @@ const Host: React.FC = () => {
               return;
             }
             case 'keydown': {
-              const keyDownDTO: DTO = { type: 'keydown', code: data.code };
-              robot.keyToggle(keyDownDTO.code, 'down');
+              const keyDownDTO: DTO = { type: 'keydown', key: data.key };
+              robot.keyToggle(keyDownDTO.key, 'down');
               return;
             }
             case 'keyup': {
-              const keyUpDTO: DTO = { type: 'keyup', code: data.code };
-              robot.keyToggle(keyUpDTO.code, 'up');
+              const keyUpDTO: DTO = { type: 'keyup', key: data.key };
+              robot.keyToggle(keyUpDTO.key, 'up');
               return;
             }
           }
