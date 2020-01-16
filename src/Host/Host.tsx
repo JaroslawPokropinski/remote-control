@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Peer from "../Peerjs/Peerjs";
 import { DTO } from '../DTO';
 
-const robot = window.require('robotjs');
+import robot from 'robotjs';
 robot.setMouseDelay(2);
 robot.setKeyboardDelay(2);
-const { desktopCapturer, ipcRenderer } = window.require('electron');
+import { desktopCapturer, ipcRenderer } from 'electron';
 
 
 async function getWindowStream(window: Electron.DesktopCapturerSource) {

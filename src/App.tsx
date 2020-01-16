@@ -3,9 +3,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import SvgComponent from './SvgComponent';
 import Peer from './Peerjs/Peerjs';
 import { DTO } from './DTO'
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+import { Panel } from 'primereact/panel';
 
-
-const { remote, ipcRenderer } = window.require('electron');
+import { remote, ipcRenderer } from 'electron';
+// const { remote, ipcRenderer } = window.require('electron');
 
 const App: React.FC = () => {
   const [peerId, setPeerId] = useState('');
@@ -27,9 +30,9 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
+  const onSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+
     const clientPeer = new Peer();
     clientPeer.on('open', () => {
       const conn = clientPeer.connect(hostId);
@@ -59,7 +62,7 @@ const App: React.FC = () => {
                 x: ev.x / v.clientWidth,
                 y: ev.y / v.clientHeight,
               }
-              conn.send( mouseDownDTO );
+              conn.send(mouseDownDTO);
             };
 
             v.onmouseup = (ev) => {
@@ -72,7 +75,7 @@ const App: React.FC = () => {
                 x: ev.x / v.clientWidth,
                 y: ev.y / v.clientHeight,
               }
-              conn.send( mouseUpDTO );
+              conn.send(mouseUpDTO);
             }
 
             v.onmousemove = (ev) => {
@@ -85,7 +88,7 @@ const App: React.FC = () => {
                 x: ev.x / v.clientWidth,
                 y: ev.y / v.clientHeight,
               }
-              conn.send( mouseMoveDTO );
+              conn.send(mouseMoveDTO);
             }
 
             window.onkeydown = (ev: any) => {
@@ -94,7 +97,7 @@ const App: React.FC = () => {
                   type: 'keydown',
                   key: ev.key,
                 }
-                conn.send( keyDownDTO );
+                conn.send(keyDownDTO);
               }
             }
 
@@ -104,7 +107,7 @@ const App: React.FC = () => {
                   type: 'keyup',
                   key: ev.key,
                 }
-                conn.send( keyUpDTO );
+                conn.send(keyUpDTO);
               }
             }
 
@@ -118,33 +121,38 @@ const App: React.FC = () => {
 
   const renderThis = () => {
     return (
-    <div>
-      
-      <div className="flex-container">
-        <div>
-          <SvgComponent width='60vw' />
-        </div>
-        
-        <div>
-          { `Your id is: ${peerId}` }
-          <form onSubmit={onSubmit}>
-            <label>Connect: </label>
-            <input value={hostId} onChange={(e) => setHostId(e.currentTarget.value)} />
-            <input type='submit' value='→' />
-          </form>
+      <div>
+
+        <div className="flex-container">
+          <div>
+            <SvgComponent width='60vw' />
+          </div>
+
+          <div style={{ width: '100%', padding: 8 }}>
+            <Panel header="Allow remote control" style={{ marginBottom: 16 }} >
+              <span style={{ paddingRight: 8 }} >
+                <b>Your id </b>
+              </span>
+              {peerId}
+            </Panel>
+
+            <Panel header="Connect to remote">
+              <InputText value={hostId} onChange={(e) => setHostId(e.currentTarget.value)} style={{ marginRight: 8 }}/>
+              <Button label="→" onClick={() => onSubmit()} />
+            </Panel>
+          </div>
         </div>
       </div>
-    </div>
     );
   }
 
   return (
     <div>
       <Host />
-      { 
+      {
         (!videoMode)
-        ? renderThis()
-        : <video muted ref={videoRef} style={{ width: '100vw' }}/>
+          ? renderThis()
+          : <video muted ref={videoRef} style={{ width: '100vw' }} />
       }
     </div>
   );
