@@ -68,7 +68,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.47",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.47",
     "@electron-forge/maker-zip": "^6.0.0-beta.47",
-    "@electron-forge/plugin-webpack": "^6.0.0-beta.47",
+    "@electron-forge/plugin-webpack": "^6.0.0",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@types/node": "^12.12.24",
     "@types/react": "^16.9.17",
